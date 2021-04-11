@@ -39,12 +39,15 @@ function createGrid(cols, rows) {
 
 // Server handling -------------------------------------
 var express = require('express');
+require('dotenv').config();
+
 var app = express();
-var server = app.listen(3000);
+const port = process.env.PORT || 3000;
+var server = app.listen(port, () => {
+	console.log('Starting server on port ${port}');
+});
 
 app.use(express.static('public'));
-
-console.log("My socket server is running");
 
 var socket = require('socket.io');
 

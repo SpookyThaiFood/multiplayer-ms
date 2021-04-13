@@ -80,7 +80,7 @@ function gameOver() {
 }
 
 function placeFlag(data) {
-	grid[data.x][data.y].flagged = data.value;
+	grid[data.x][data.y].flagged = data.flagged;
 }
 
 function keyPressed() {

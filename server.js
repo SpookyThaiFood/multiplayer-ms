@@ -50,7 +50,7 @@ require('dotenv').config();
 var app = express();
 const port = process.env.PORT || 3000;
 var server = app.listen(port, () => {
-	console.log('Starting server on port ${port}');
+	console.log('Starting server on port ' + port);
 });
 
 app.use(express.static('public'));

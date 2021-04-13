@@ -84,7 +84,6 @@ function newConnection(socket) {
 
 	function flagClients(data) {
 		socket.broadcast.emit('placeFlag', data);
-		console.log(data);
 		flagged[data.x][data.y] = data.flagged;
 	}
 

@@ -55,14 +55,21 @@ function countBees() {
 }
 
 function loadGrid(data) {
-	grid = make2DArray(data.length, data[0].length);
+	var bombs = data.bombs;
+	var revealed = data.revealed;
+	var flagged = data.flagged;
+	grid = make2DArray(cols, rows);
 	for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
 		grid[i][j] = new Cell(i, j, w);
 	}
-	for (var i = 0; i < data.length; i++) for (var j = 0; j < data[0].length; j++) {
-		grid[i][j].bee = data[i][j];
+	for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
+		grid[i][j].bee = bombs[i][j];
+		grid[i][j].revealed = revealed[i][j];
+		grid[i][j].flagged = flagged[i][j];
 	}
 	console.log('Grid data loaded');
+	console.table(data);
+	console.table(grid);
 	countBees();
 }
 
@@ -73,11 +80,7 @@ function gameOver() {
 }
 
 function placeFlag(data) {
-	for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
-		if (grid[i][j].contains(data.x, data.y)) {
-			grid[i][j].flagged = !grid[i][j].flagged;
-		}
-	}
+	grid[data.x][data.y].flagged = data.value;
 }
 
 function keyPressed() {
@@ -85,14 +88,23 @@ function keyPressed() {
 		for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
 			if (grid[i][j].contains(mouseX, mouseY)) {
 				grid[i][j].flagged = !grid[i][j].flagged;
+				var data = {
+					x: i,
+					y: j,
+					flagged: grid[i][j].flagged
+				}
+				socket.emit('flag', data);
 			}
 		}
-		var data = {
-			x: mouseX,
-			y: mouseY
-		}
-		socket.emit('flag', data);
 	}
+}
+
+function sendStateChange() {
+	var state = make2DArray(cols, rows);
+	for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
+		state[i][j] = grid[i][j].revealed;
+	}
+	socket.emit('stateChange', state);
 }
 
 function mousePressed() {
@@ -101,10 +113,11 @@ function mousePressed() {
 			grid[i][j].reveal();
 			if (!grid[i][j].bee || grid[i][j].flagged) {
 				var data = {
-					x: mouseX,
-					y: mouseY
+					x: i,
+					y: j
 				}
 				socket.emit('click', data);
+				sendStateChange();
 			}
 			if (grid[i][j].bee && !grid[i][j].flagged) {
 				socket.emit('gameOver');
@@ -116,11 +129,7 @@ function mousePressed() {
 }
 
 function remotePress(data) {
-	for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
-		if (grid[i][j].contains(data.x, data.y)) {
-			grid[i][j].reveal();
-		}
-	}
+	grid[data.x][data.y].reveal();
 }
 
 function draw() {

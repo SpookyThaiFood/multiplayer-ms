@@ -4,7 +4,9 @@ const cols = 40;
 const rows = 20;
 const w = 40;
 
-var grid = make2DArray(cols, rows);
+var bombs;
+var revealed;
+var flagged;
 
 const totalBombs = 100;
 
@@ -17,9 +19,13 @@ function make2DArray(cols, rows) {
 }
 
 function createGrid(cols, rows) {
-	grid = make2DArray(cols, rows);
+	bombs = make2DArray(cols, rows);
+	revealed = make2DArray(cols, rows);
+	flagged = make2DArray(cols, rows);
 	for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
-		grid[i][j] = false;
+		bombs[i][j] = false;
+		revealed[i][j] = false;
+		flagged[i][j] = false;
 	}
 
 	var options = [];
@@ -33,7 +39,7 @@ function createGrid(cols, rows) {
 		var i = choice[0];
 		var j = choice[1];
 		options.splice(index, 1);
-		grid[i][j] = true;
+		bombs[i][j] = true;
 	}
 }
 
@@ -59,8 +65,15 @@ createGrid(cols, rows);
 function newConnection(socket) {
 	console.log('new connection: ' + socket.id);
 
-	socket.emit('grid', grid);
+	socket.emit('grid', { 
+		bombs: bombs, 
+		revealed: revealed, 
+		flagged: flagged 
+	});
 
+	socket.on('stateChange', (newState) => {
+		revealed = newState;
+	});
 	socket.on('click', clickClients);
 	socket.on('flag', flagClients);
 	socket.on('gameOver', gameOver);
@@ -71,14 +84,21 @@ function newConnection(socket) {
 
 	function flagClients(data) {
 		socket.broadcast.emit('placeFlag', data);
+		console.log(data);
+		flagged[data.x][data.y] = data.flagged;
 	}
 
 	function gameOver() {
 		socket.broadcast.emit('endGame');
 		createGrid(cols, rows);
 		console.log(socket.id + ' lost the game');
-		socket.emit('grid', grid);
-		socket.broadcast.emit('grid', grid);
+		var data = { 
+			bombs: bombs, 
+			revealed: revealed, 
+			flagged: flagged 
+		}
+		socket.emit('grid', data);
+		socket.broadcast.emit('grid', data);
 		console.log('sent out new grid');
 	}
 }

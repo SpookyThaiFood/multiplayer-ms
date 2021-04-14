@@ -9,8 +9,8 @@ function make2DArray(cols, rows) {
 }
 
 var grid;
-var cols = 40;
-var rows = 20;
+var cols = 80;
+var rows = 40;
 var w = 40;
 
 var totalBees = 100;
@@ -23,7 +23,7 @@ function setup() {
 	socket.on('placeFlag', placeFlag);
 	socket.on('endGame', gameOver);
 
-	createCanvas(1601, 801);
+	createCanvas(3201, 1601);
 }
 
 function offlineGrid() {

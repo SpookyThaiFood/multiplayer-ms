@@ -1,14 +1,14 @@
 // Methods for creating the grid -----------------------------
 
-const cols = 40;
-const rows = 20;
+const cols = 80;
+const rows = 40;
 const w = 40;
 
 var bombs;
 var revealed;
 var flagged;
 
-const totalBombs = 100;
+const totalBombs = 500;
 
 function make2DArray(cols, rows) {
 	var arr = new Array(cols);

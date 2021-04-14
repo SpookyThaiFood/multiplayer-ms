@@ -4,21 +4,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>p5.js example</title>
+  <title>Online Minesweeper</title>
   <style>
     body {
       padding: 0;
       margin: 0;
     }
+
+    div {
+      position: fixed;
+      background-color: LightCoral;
+      padding: 10;
+      right: 10px;
+      bottom: 10px;
+      width: 200px;
+      height: 200px;
+      text-align: center;
+      z-index: 100;
+    }
+
+    p {
+      font-family: cursive;
+    }
   </style>
+  <div>
+    <p>Welcome to Online Minesweeper!</p>
+    <p>Key bindings:</p>
+    <p>'f' to flag squares</p>
+    <p>'h' to hide this legend.</p>
+  </div>
+</head>
+
+<body>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script src="p5.js"></script>
   <!-- <script src="../addons/p5.sound.js"></script> -->
   <script src="sketch.js"></script>
   <script src="cell.js"></script>
-</head>
-
-<body>
   <main>
   </main>
 </body>

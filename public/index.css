@@ -1,0 +1,24 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.legend {
+  opacity: 1;
+  font-family: copperplate;
+  position: fixed;
+  background-color: LightCoral;
+  padding: 10;
+  right: 10px;
+  bottom: 10px;
+  width: 200px;
+  height: 210px;
+  text-align: center;
+  z-index: 100;
+}
+
+.legend-title {
+  top: 0;
+  height: 40px;
+  background-color: LightCoral;
+}

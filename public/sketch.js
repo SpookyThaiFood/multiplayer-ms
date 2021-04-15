@@ -13,6 +13,9 @@ var cols = 80;
 var rows = 40;
 var w = 40;
 
+var legend;
+var legendShown = true;
+
 var totalBees = 100;
 
 function setup() {
@@ -24,6 +27,7 @@ function setup() {
 	socket.on('endGame', gameOver);
 
 	createCanvas(3201, 1601);
+	legend = document.getElementById("legend");
 }
 
 function offlineGrid() {
@@ -96,7 +100,15 @@ function keyPressed() {
 				socket.emit('flag', data);
 			}
 		}
+	} else if (key == 'h') {
+		console.log('h pressed');
+		toggleLegend();
 	}
+}
+
+function toggleLegend() {
+	legendShown = !legendShown;
+	legend.style.opacity = legendShown ? 1 : 0;
 }
 
 function sendStateChange() {

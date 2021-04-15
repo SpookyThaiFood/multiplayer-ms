@@ -122,16 +122,16 @@ io.sockets.on('connection', (socket) => {
 		socket.broadcast.emit('grid', data);
 		console.log('sent out new grid');
 	}
-});
 
-io.sockets.on('disconnect', (socket) => {
-	console.log(sockt.id + ' disconnected.');
+	socket.on('disconnect', () => {
+		console.log(socket.id + ' disconnected.');
 
-	for (var i = 0; i < users.length; i++) {
-		if (users[i].id == socket.id) {
-			users.splice(i, 1);
+		for (var i = 0; i < users.length; i++) {
+			if (users[i].id == socket.id) {
+				users.splice(i, 1);
+			}
 		}
-	}
+	});
 });
 
 function getUser(socket) {

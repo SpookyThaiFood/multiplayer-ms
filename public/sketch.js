@@ -166,10 +166,12 @@ function draw() {
 
 	for (var i = 0; i < users.length; i++) {
 		var user = users[i];
-		fill(0);
-		noStroke();
-		ellipse(user.x, user.y, 10);
-		text(user.username, user.x, user.y);
+		if (user.username != username) {
+			fill(0);
+			noStroke();
+			ellipse(user.x, user.y, 10);
+			text(user.username, user.x, user.y - 5);
+		}
 	}
 }
 

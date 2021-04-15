@@ -22,3 +22,26 @@ body {
   height: 40px;
   background-color: LightCoral;
 }
+
+.bar {
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  align-items: center;
+  padding-bottom: 5px;
+  padding-top: 0;
+  height: 50px;
+  width: 100%;
+  background-color: LightCoral;
+  z-index: 100;
+}
+
+.username {
+  resize: none;
+}
+
+canvas {
+  position: absolute;
+  top: 50px;
+}

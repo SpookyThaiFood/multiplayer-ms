@@ -14,9 +14,13 @@ var rows = 40;
 var w = 40;
 
 var legend;
+var userField;
 var legendShown = true;
 
 var totalBees = 100;
+
+var username = "Thaibo";
+var users = [];
 
 function setup() {
 	offlineGrid();
@@ -25,9 +29,11 @@ function setup() {
 	socket.on('mouseClick', remotePress);
 	socket.on('placeFlag', placeFlag);
 	socket.on('endGame', gameOver);
+	socket.on('userList', updateUserList);
 
 	createCanvas(3201, 1601);
 	legend = document.getElementById("legend");
+	userField = document.getElementById("username");
 }
 
 function offlineGrid() {
@@ -100,7 +106,7 @@ function keyPressed() {
 				socket.emit('flag', data);
 			}
 		}
-	} else if (key == 'h') {
+	} else if (key == 'h' && mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
 		console.log('h pressed');
 		toggleLegend();
 	}
@@ -117,6 +123,14 @@ function sendStateChange() {
 		state[i][j] = grid[i][j].revealed;
 	}
 	socket.emit('stateChange', state);
+}
+
+function mouseMoved() {
+	var user = {
+		x: mouseX,
+		y: mouseY
+	}
+	socket.emit('update', user);
 }
 
 function mousePressed() {
@@ -149,4 +163,25 @@ function draw() {
 	for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
 		grid[i][j].show();
 	}
+
+	for (var i = 0; i < users.length; i++) {
+		var user = users[i];
+		fill(0);
+		noStroke();
+		ellipse(user.x, user.y, 10);
+		text(user.username, user.x, user.y);
+	}
+}
+
+function submitUsername() {
+	var user = {
+		username: userField.value,
+	}
+	username = userField.value;
+	console.log(username);
+	socket.emit('submitUsername', user);
+}
+
+function updateUserList(userList) {
+	users = userList;
 }

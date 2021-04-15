@@ -57,18 +57,40 @@ app.use(express.static('public'));
 
 var socket = require('socket.io');
 
+var users = [];
+
 var io = socket(server);
-io.sockets.on('connection', newConnection);
 
 createGrid(cols, rows);
 
-function newConnection(socket) {
+io.sockets.on('connection', (socket) => {
 	console.log('new connection: ' + socket.id);
+
+	user = {
+		id: socket.id,
+		username: "Thaibo",
+		x: 0,
+		y: 0
+	}
+	users.push(user);
 
 	socket.emit('grid', { 
 		bombs: bombs, 
 		revealed: revealed, 
 		flagged: flagged 
+	});
+
+	socket.on('submitUsername', (user) => {
+		var index = getUser(socket);
+		console.log(users[index].username + ', ' + users[index].id + ' set their username to ' + user.username);
+		users[index].username = user.username;
+	})
+
+	socket.on('update', (user) => {
+		var index = getUser(socket)
+		users[index].x = user.x;
+		users[index].y = user.y;
+		io.sockets.emit('userList', users);
 	});
 
 	socket.on('stateChange', (newState) => {
@@ -100,5 +122,25 @@ function newConnection(socket) {
 		socket.broadcast.emit('grid', data);
 		console.log('sent out new grid');
 	}
+});
+
+io.sockets.on('disconnect', (socket) => {
+	console.log(sockt.id + ' disconnected.');
+
+	for (var i = 0; i < users.length; i++) {
+		if (users[i].id == socket.id) {
+			users.splice(i, 1);
+		}
+	}
+});
+
+function getUser(socket) {
+	for (var i = 0; i < users.length; i++) {
+		if (users[i].id == socket.id) {
+			return i;
+		}
+	}
 }
+
+
 

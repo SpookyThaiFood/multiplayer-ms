@@ -1,0 +1,3 @@
+( ) Give the ability to make rooms
+( ) Allow for rooms to have custom grid sizes
+( ) List players in the room

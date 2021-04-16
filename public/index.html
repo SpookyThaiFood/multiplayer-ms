@@ -26,7 +26,13 @@
   <div class="bar">
     <textarea name="userField" id="username" class="username" rows="1" cols="16"
       placeholder="Username" maxlength=16></textarea>
-    <button onclick="submitUsername()">Submit</button>
+    <button onclick="submitUsername()" class="userSubmit">Submit</button>
+    <input type="range" min="0" max="255" value="0" class="slider-red" id="redSlider">
+    <input type="range" min="0" max="255" value="0" class="slider-green" id="greenSlider">
+    <input type="range" min="0" max="255" value="0" class="slider-blue" id="blueSlider">
+    <div id="colourPreview" class="box"></div>
+    <button onclick="submitColour()" class="colourSubmit">Character Colour</button>
+    
   </div>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script src="p5.js"></script>

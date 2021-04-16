@@ -70,7 +70,10 @@ io.sockets.on('connection', (socket) => {
 		id: socket.id,
 		username: "Thaibo",
 		x: 0,
-		y: 0
+		y: 0,
+		r: 0,
+		g: 0,
+		b: 0
 	}
 	users.push(user);
 
@@ -84,6 +87,13 @@ io.sockets.on('connection', (socket) => {
 		var index = getUser(socket);
 		console.log(users[index].username + ', ' + users[index].id + ' set their username to ' + user.username);
 		users[index].username = user.username;
+	})
+
+	socket.on('submitColour', (colour) => {
+		var index = getUser(socket);
+		users[index].r = colour.r;
+		users[index].g = colour.g;
+		users[index].b = colour.b;
 	})
 
 	socket.on('update', (user) => {
@@ -124,7 +134,7 @@ io.sockets.on('connection', (socket) => {
 	}
 
 	socket.on('disconnect', () => {
-		console.log(socket.id + ' disconnected.');
+		console.log(socket.id + ' (' + getUser(socket).username + ') disconnected.');
 
 		for (var i = 0; i < users.length; i++) {
 			if (users[i].id == socket.id) {

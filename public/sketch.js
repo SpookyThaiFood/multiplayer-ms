@@ -15,7 +15,12 @@ var w = 40;
 
 var legend;
 var userField;
+var colourPreview;
 var legendShown = true;
+
+var redSlider;
+var greenSlider;
+var blueSlider;
 
 var totalBees = 100;
 
@@ -34,6 +39,16 @@ function setup() {
 	createCanvas(3201, 1601);
 	legend = document.getElementById("legend");
 	userField = document.getElementById("username");
+
+	colourPreview = document.getElementById("colourPreview");
+
+	redSlider = document.getElementById("redSlider");
+	greenSlider = document.getElementById("greenSlider");
+	blueSlider = document.getElementById("blueSlider");
+
+	redSlider.addEventListener('input', setColour);
+	greenSlider.addEventListener('input', setColour);
+	blueSlider.addEventListener('input', setColour);
 }
 
 function offlineGrid() {
@@ -78,8 +93,6 @@ function loadGrid(data) {
 		grid[i][j].flagged = flagged[i][j];
 	}
 	console.log('Grid data loaded');
-	console.table(data);
-	console.table(grid);
 	countBees();
 }
 
@@ -107,7 +120,6 @@ function keyPressed() {
 			}
 		}
 	} else if (key == 'h' && mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
-		console.log('h pressed');
 		toggleLegend();
 	}
 }
@@ -130,7 +142,25 @@ function mouseMoved() {
 		x: mouseX,
 		y: mouseY
 	}
+
 	socket.emit('update', user);
+}
+
+function setColour() {
+	var red = redSlider.value;
+	var green = greenSlider.value;
+	var blue = blueSlider.value;
+	var colour = 'rgb(' + red + ',' + green + ',' + blue + ')';
+	colourPreview.style.backgroundColor = colour;
+}
+
+function submitColour() {
+	var colour = {
+		r: redSlider.value,
+		g: greenSlider.value,
+		b: blueSlider.value
+	}
+	socket.emit('submitColour', colour);
 }
 
 function mousePressed() {
@@ -167,10 +197,14 @@ function draw() {
 	for (var i = 0; i < users.length; i++) {
 		var user = users[i];
 		if (user.username != username) {
+			fill(user.r, user.g, user.b);
+			stroke(0);
+			strokeWeight(2);
+			ellipse(user.x, user.y, 25);
+			strokeWeight(1);
 			fill(0);
 			noStroke();
-			ellipse(user.x, user.y, 10);
-			text(user.username, user.x, user.y - 5);
+			text(user.username, user.x, user.y - 15);
 		}
 	}
 }
@@ -180,7 +214,6 @@ function submitUsername() {
 		username: userField.value,
 	}
 	username = userField.value;
-	console.log(username);
 	socket.emit('submitUsername', user);
 }
 

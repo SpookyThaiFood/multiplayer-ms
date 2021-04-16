@@ -26,6 +26,7 @@ var totalBees = 100;
 
 var username = "Thaibo";
 var users = [];
+var userPos = [];
 
 function setup() {
 	offlineGrid();
@@ -194,6 +195,8 @@ function draw() {
 		grid[i][j].show();
 	}
 
+	updateUserPositions();
+
 	for (var i = 0; i < users.length; i++) {
 		var user = users[i];
 		if (user.username != username) {
@@ -213,10 +216,29 @@ function submitUsername() {
 	var user = {
 		username: userField.value,
 	}
-	username = userField.value;
+	username = user.username;
 	socket.emit('submitUsername', user);
 }
 
+function updateUserPositions() {
+	for (var i = 0; i < users.length; i++) {
+		users[i].x = lerp(users[i].x, userPos[i].x, 0.3);
+		users[i].y = lerp(users[i].y, userPos[i].y, 0.3);
+	}
+}
+
 function updateUserList(userList) {
-	users = userList;
+	userPos = userList;
+	if (users.length != userPos.length) {
+		users = userPos;
+	}
+	for (var i = 0; i < users.length; i++) {
+		if (users[i].username != userPos[i].username || 
+			users[i].id != userPos[i].id || 
+			users[i].r != userPos[i].r ||
+			users[i].g != userPos[i].g ||
+			users[i].b != userPos[i].b) {
+			users = userPos;
+		}
+	}
 }

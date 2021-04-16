@@ -42,6 +42,7 @@ input:hover {
 }
 
 .legend {
+  padding: 15px;
   opacity: 1;
   font-family: copperplate;
   position: fixed;
@@ -50,7 +51,7 @@ input:hover {
   right: 10px;
   bottom: 10px;
   width: 200px;
-  height: 210px;
+  height: 330px;
   text-align: center;
   z-index: 100;
 }

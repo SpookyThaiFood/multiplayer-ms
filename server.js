@@ -134,7 +134,8 @@ io.sockets.on('connection', (socket) => {
 	}
 
 	socket.on('disconnect', () => {
-		console.log(socket.id + ' (' + getUser(socket).username + ') disconnected.');
+		var index = getUser(socket);
+		console.log(socket.id + ' (' + users[index].username + ') disconnected.');
 
 		for (var i = 0; i < users.length; i++) {
 			if (users[i].id == socket.id) {

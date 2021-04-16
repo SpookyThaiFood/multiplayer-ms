@@ -86,7 +86,11 @@ input:hover {
   resize: none;
 }
 
+label {
+  margin-left: 5px;
+}
+
 canvas {
   position: absolute;
-  top: 50px;
+  top: 55px;
 }

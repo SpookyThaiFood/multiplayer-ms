@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta name="description" content="Online Minesweeper using p5.js">
+
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://multiplayer-beesweeper.glitch.me/">
   <meta property="og:title" content="Multiplayer Minesweeper">
@@ -29,15 +30,24 @@
     <textarea name="userField" id="username" class="username" rows="1" cols="16"
       placeholder="Username" maxlength=16></textarea>
     <button onclick="submitUsername()" class="userSubmit">Submit</button>
+
+    <label for="redSlider">Red Slider</label>
     <input type="range" min="0" max="255" value="0" class="slider-red" id="redSlider">
+    <label for="greenSlider">Green Slider</label>
     <input type="range" min="0" max="255" value="0" class="slider-green" id="greenSlider">
+    <label for="blueSlider">Blue Slider</label>
     <input type="range" min="0" max="255" value="0" class="slider-blue" id="blueSlider">
+
+    
+    
+    
     <div id="colourPreview" class="box"></div>
+
     <button onclick="submitColour()" class="colourSubmit">Character Colour</button>
     
   </div>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script src="p5.js"></script>
+  <script src="p5.min.js"></script>
   <!-- <script src="../addons/p5.sound.js"></script> -->
   <script src="sketch.js"></script>
   <script src="cell.js"></script>

@@ -222,8 +222,8 @@ function submitUsername() {
 
 function updateUserPositions() {
 	for (var i = 0; i < users.length; i++) {
-		users[i].x = lerp(users[i].x, userPos[i].x, 0.3);
-		users[i].y = lerp(users[i].y, userPos[i].y, 0.3);
+		users[i].x = lerp(users[i].x, userPos[i].x, 0.5);
+		users[i].y = lerp(users[i].y, userPos[i].y, 0.5);
 	}
 }
 

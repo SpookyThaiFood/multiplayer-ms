@@ -65,6 +65,7 @@ createGrid(cols, rows);
 
 io.sockets.on('connection', (socket) => {
 	console.log('new connection: ' + socket.id);
+	console.log(socket.rooms);
 
 	user = {
 		id: socket.id,

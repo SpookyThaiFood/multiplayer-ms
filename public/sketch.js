@@ -1,4 +1,4 @@
-var socket;
+const socket = io("http://localhost:3000");
 
 function make2DArray(cols, rows) {
 	var arr = new Array(cols);
@@ -30,7 +30,7 @@ var userPos = [];
 
 function setup() {
 	offlineGrid();
-	socket = io.connect("http://localhost:3000");
+	//socket = io.connect("http://localhost:3000");
 	socket.on('grid', loadGrid);
 	socket.on('mouseClick', remotePress);
 	socket.on('placeFlag', placeFlag);

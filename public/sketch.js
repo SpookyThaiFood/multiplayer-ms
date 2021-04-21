@@ -37,7 +37,9 @@ function setup() {
 	socket.on('endGame', gameOver);
 	socket.on('userList', updateUserList);
 
-	createCanvas(3201, 1601);
+	cnv = createCanvas(3201, 1601);
+	cnv.mousePressed(mousePress);
+
 	legend = document.getElementById("legend");
 	userField = document.getElementById("username");
 
@@ -127,7 +129,7 @@ function keyPressed() {
 
 function toggleLegend() {
 	legendShown = !legendShown;
-	legend.style.opacity = legendShown ? 1 : 0;
+	legend.style.display = legendShown ? "block" : "none";
 }
 
 function sendStateChange() {
@@ -164,7 +166,7 @@ function submitColour() {
 	socket.emit('submitColour', colour);
 }
 
-function mousePressed() {
+function mousePress() {
 	for (var i = 0; i < cols; i++) for (var j = 0; j < rows; j++) {
 		if (grid[i][j].contains(mouseX, mouseY)) {
 			grid[i][j].reveal();

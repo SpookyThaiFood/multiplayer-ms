@@ -1,6 +1,12 @@
 body {
   padding: 0;
   margin: 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 input {
@@ -51,7 +57,7 @@ input:hover {
   right: 10px;
   bottom: 10px;
   width: 200px;
-  height: 330px;
+  height: 210px;
   text-align: center;
   z-index: 100;
 }

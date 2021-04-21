@@ -8,6 +8,8 @@ function make2DArray(cols, rows) {
 	return arr;
 }
 
+var greetings = [ 'Hello', 'Greetings', 'Hóla', '¿Qué tal?', 'Zdravstvuyte', 'Privet', 'Nǐn hǎo', 'Nǐ hǎo', 'Salve', 'Ciao', 'こんにちは', 'やあ', 'よう', '最近どう', 'Guten Tag', 'Hallo, Hi', 'Olá', 'Oi', 'Anyoung haseyo', 'Anyoung', 'Goddag', 'Hej, Halløj', 'Asalaam alaikum', 'Ahlan', 'Shikamoo', 'Habari, Hujambo', 'Goedendag', 'Hoi, Hallo', 'Yassas', 'Yassou', 'Dzień dobry', 'Cześć, Witaj', 'Selamat siang', 'Halo', 'Namaste, Namaskar', 'Hai, Helo', 'Merhaba', 'Selam', 'Shalom', 'Hey', 'God dag', 'Hej, Tjena', 'Hei' ];
+
 var grid;
 var cols = 80;
 var rows = 40;
@@ -15,8 +17,11 @@ var w = 40;
 
 var legend;
 var userField;
+var userForm;
 var colourPreview;
 var legendShown = true;
+
+var snackbar;
 
 var redSlider;
 var greenSlider;
@@ -42,8 +47,16 @@ function setup() {
 
 	legend = document.getElementById("legend");
 	userField = document.getElementById("username");
+	userForm = document.getElementById("userForm");
+
+	userForm.addEventListener('submit', (event) => {
+		submitUsername();
+		event.preventDefault();
+	}, false);
 
 	colourPreview = document.getElementById("colourPreview");
+
+	snackbar = document.getElementById("snackbar");
 
 	redSlider = document.getElementById("redSlider");
 	greenSlider = document.getElementById("greenSlider");
@@ -220,6 +233,14 @@ function submitUsername() {
 	}
 	username = user.username;
 	socket.emit('submitUsername', user);
+
+	// Snackbar greetings... (inside joke)
+	var greeting = greetings[floor(random(greetings.length))];
+	snackbar.innerHTML = greeting + ", " + username + ".";
+	snackbar.className = "show";
+	setTimeout(() => {
+		snackbar.className = snackbar.className.replace("show", "");
+	}, 3000);
 }
 
 function updateUserPositions() {

@@ -12,9 +12,17 @@
   <meta property="og:description" content="Multiplayer Minesweeper by Thailan">
   <meta property="og:image" content="https://cdn.discordapp.com/attachments/793298849782300685/793304216654446592/IMG_3314.PNG">
 
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+  <link rel="manifest" href="/icons/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+
   <title>Online Minesweeper</title>
   <link rel="stylesheet" href="index.css">
-  <div class="legend" id="legend">
+  <div class="legend disable-select" id="legend">
     <h2 class="legend-title">Welcome to Online Minesweeper!</h2>
     <br>
     <p>Key bindings:</p>
@@ -26,9 +34,12 @@
 </head>
 
 <body>
+  <div id="snackbar">Username updated.</div>
   <div class="bar">
-    <textarea name="userField" id="username" class="username" rows="1" cols="16"
-      placeholder="Username" maxlength=16></textarea>
+    <form id="userForm">
+      <input type="text" name="userField" id="username" class="username" rows="1" cols="16"
+        placeholder="Username" maxlength=16></textarea>
+    </form>
     <button onclick="submitUsername()" class="userSubmit">Submit</button>
 
     <label for="redSlider">Red</label>

@@ -28,6 +28,7 @@
     <p>Key bindings:</p>
     <p>'f' to flag squares</p>
     <p>'h' to hide this legend.</p>
+    <p>Click the colour preview box to change the colour of your character.</p>
     <!--<p style="padding-top: 15px;">Notes: Be careful when clicking menus, it may register the click on the grid underneath.
     There will be a fix for this soon TM</p> -->
   </div>
@@ -40,7 +41,7 @@
       <input type="text" name="userField" id="username" class="username" rows="1" cols="16"
         placeholder="Username" maxlength=16></textarea>
     </form>
-    <button onclick="submitUsername()" class="userSubmit">Submit</button>
+    <button onclick="submitUsername()" class="userSubmit">Join</button>
 
     <label for="redSlider">Red</label>
     <input type="range" min="0" max="255" value="0" class="slider-red" id="redSlider">
@@ -48,13 +49,8 @@
     <input type="range" min="0" max="255" value="0" class="slider-green" id="greenSlider">
     <label for="blueSlider">Blue</label>
     <input type="range" min="0" max="255" value="0" class="slider-blue" id="blueSlider">
-
     
-    
-    
-    <div id="colourPreview" class="box"></div>
-
-    <button onclick="submitColour()" class="colourSubmit">Character Colour</button>
+    <div id="colourPreview" class="box" onclick="submitColour()"></div>
     
   </div>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>

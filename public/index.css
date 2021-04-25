@@ -32,6 +32,32 @@ input:hover {
   display: inline-grid;
 }
 
+input[type=range]::-webkit-slider-runnable-track {
+  height: 16px;
+  border: 2px solid white;
+  border-radius: 15px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border-radius: 0.75rem;
+  background: white;
+  border: 1px solid;
+  margin-top: -2px;
+}
+
+.slider-red::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, black, rgb(255, 0, 0));
+}
+
+.slider-green::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, black, rgb(0, 255, 0));
+}
+
+.slider-blue::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, black, rgb(0, 0, 255));
+}
+
 #snackbar {
   visibility: hidden;
   min-width: 250px;
